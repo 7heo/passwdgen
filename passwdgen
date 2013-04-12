@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+then
+  stty_orig=`stty -g`
+  stty -echo
+  read -p "Please enter the desired password: " passwd
+  stty $stty_orig
+  echo
+else
+  passwd=$1
+fi
+
+perl -e "printf crypt($passwd, \"\\\$6\\\$$(pwgen -s 16 1)\\\$\");"
+echo
